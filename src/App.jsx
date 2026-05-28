@@ -25,7 +25,7 @@ const PHOTOS = [
   "https://images.unsplash.com/photo-1583241800698-e8ab01830e36?auto=format&fit=crop&w=600&q=85",
   "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=85&crop=bottom",
 ];
-const HERO_IMG = "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=900&q=90";
+const HERO_IMG = "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=900&q=90";
 const SVC_IMG  = "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=90";
 const BAND_IMG = "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1600&q=80";
 
@@ -260,6 +260,9 @@ function PromoPopup({ promo }) {
 
   useEffect(() => {
     if (!promo || !promo.active || !promo.headline) return;
+    // Check if user clicked "do not show" within last 24 hours
+    const hiddenUntil = localStorage.getItem("tna_promo_hidden_until");
+    if (hiddenUntil && Date.now() < parseInt(hiddenUntil)) return;
     const timer = setTimeout(() => setVisible(true), 2500);
     return () => clearTimeout(timer);
   }, [promo]);
@@ -310,8 +313,11 @@ function PromoPopup({ promo }) {
               📷 Message on Instagram
             </a>
           </div>
-          <p onClick={close} style={{textAlign:"center", marginTop:16, fontSize:11, color:"#A09080", cursor:"pointer", letterSpacing:0.5}}>
-            No thanks, continue browsing
+          <p onClick={()=>{
+            localStorage.setItem("tna_promo_hidden_until", String(Date.now() + 24*60*60*1000));
+            close();
+          }} style={{textAlign:"center", marginTop:16, fontSize:11, color:"#A09080", cursor:"pointer", letterSpacing:0.5, textDecoration:"underline"}}>
+            Don't show for 24 hours
           </p>
         </div>
       </div>
@@ -514,14 +520,8 @@ function Hero({t,scrollTo}){
                 alignItems:"center",gap:12,
                 backdropFilter:"blur(8px)"}}>
                 <img src={LOGO_URL} alt="Today's Nail Art"
-                  style={{height:110,width:"auto",objectFit:"contain"}}
+                  style={{height:130,width:"auto",objectFit:"contain"}}
                   onError={e=>e.target.style.display="none"}/>
-                <div style={{width:32,height:1,background:"#C4857A"}}/>
-                <p style={{fontFamily:"'Inter',sans-serif",fontSize:9,
-                  letterSpacing:4,textTransform:"uppercase",
-                  color:"#A09080",textAlign:"center"}}>
-                  Plano, Texas
-                </p>
               </div>
             </div>
           </div>
