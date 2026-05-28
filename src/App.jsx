@@ -19,15 +19,15 @@ const BODY_MAX = 160;
 
 const PHOTOS = [
   "https://images.unsplash.com/photo-1604655856234-5e7c94c1c7dc?auto=format&fit=crop&w=600&q=85",
-  "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=600&q=85",
   "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=85",
-  "https://images.unsplash.com/photo-1604654894614-df63bc536371?auto=format&fit=crop&w=600&q=85",
-  "https://images.unsplash.com/photo-1583241800698-e8ab01830e36?auto=format&fit=crop&w=600&q=85",
   "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=85",
+  "https://images.unsplash.com/photo-1604655856234-5e7c94c1c7dc?auto=format&fit=crop&w=600&q=85&crop=top",
+  "https://images.unsplash.com/photo-1583241800698-e8ab01830e36?auto=format&fit=crop&w=600&q=85",
+  "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=85&crop=bottom",
 ];
 const HERO_IMG = "https://images.unsplash.com/photo-1604655856234-5e7c94c1c7dc?auto=format&fit=crop&w=900&q=90";
-const SVC_IMG  = "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=900&q=90";
-const BAND_IMG = "https://images.unsplash.com/photo-1583241800698-e8ab01830e36?auto=format&fit=crop&w=1600&q=80";
+const SVC_IMG  = "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=90";
+const BAND_IMG = "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1600&q=80";
 
 const W="#FFFFFF",OFF="#FAF8F5",WARM="#F3EDE5",BDR="#E5DDD5",INK="#1A1714",MID="#6A5E54",LITE="#A09080",ROSE="#C4857A",ROSE2="#E8B4AB",DARK="#1C1814";
 
@@ -378,7 +378,6 @@ function Styles(){
       @media(max-width:640px){
         .two-col{grid-template-columns:1fr!important;}
         .about-grid{grid-template-columns:1fr!important;gap:32px!important;}
-        .hero-right{display:none!important;}
         .sec-pad{padding:64px 20px!important;}
         .hero-wrap{padding:0 20px!important;grid-template-columns:1fr!important;gap:0!important;}
         .svc-photo-h{height:200px!important;margin-bottom:36px!important;}
@@ -492,9 +491,9 @@ function Hero({t,scrollTo}){
             </button>
           </div>
         </div>
-        <div className="rise hero-right" style={{position:"relative",animationDelay:"0.28s",opacity:0}}>
-          <div style={{borderRadius:20,overflow:"hidden",aspectRatio:"4/5",boxShadow:"0 32px 80px rgba(28,24,20,0.15)"}}>
-            <img src={HERO_IMG} alt="Nail art" onError={e=>{e.target.style.display="none";e.target.parentElement.style.background=`linear-gradient(160deg,${WARM},${OFF})`;}} style={{width:"100%",height:"100%",objectFit:"cover"}}/>
+        <div className="rise" style={{position:"relative",animationDelay:"0.28s",opacity:0}}>
+          <div style={{borderRadius:20,overflow:"hidden",aspectRatio:"4/5",boxShadow:"0 32px 80px rgba(28,24,20,0.15)",background:`linear-gradient(160deg,${WARM},${OFF})`}}>
+            <img src={HERO_IMG} alt="Nail art" onError={e=>e.target.style.opacity="0"} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center top"}}/>
           </div>
           <div className="bob" style={{position:"absolute",bottom:-16,left:-24,background:W,borderRadius:12,padding:"14px 18px",boxShadow:"0 12px 40px rgba(28,24,20,0.14)",border:`1px solid ${BDR}`,display:"flex",alignItems:"center",gap:12}}>
             <img src={LOGO_URL} alt="logo" style={{height:36,width:"auto",objectFit:"contain"}} onError={e=>e.target.style.display="none"}/>
@@ -799,9 +798,10 @@ function MapSection({t}){
         </div>
       </div>
       <div style={{width:"100%",height:400,position:"relative"}}>
-        <iframe title="Studio Location"
-          src="https://www.openstreetmap.org/export/embed.html?bbox=-96.834%2C33.040%2C-96.810%2C33.056&layer=mapnik&marker=33.0484%2C-96.8222"
-          width="100%" height="400" style={{border:0,display:"block"}} allowFullScreen="" loading="lazy"/>
+        <iframe 
+          title="Studio Location"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13378.099921907224!2d-96.8000503738052!3d33.042643078618816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864c22e2e4c85afb%3A0x6f9d35111f210c14!2s4709%20W%20Parker%20Rd%2C%20Plano%2C%20TX%2075093!5e0!3m2!1sen!2sus!4v1780007611269!5m2!1sen!2sus"
+          width="100%" height="400" style={{border:0,display:"block"}} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"/>
         <div style={{position:"absolute",top:16,left:16,background:W,borderRadius:10,padding:"14px 18px",boxShadow:"0 6px 24px rgba(28,24,20,0.18)",border:`1px solid ${BDR}`,maxWidth:220}}>
           <p style={{fontFamily:"'Playfair Display',serif",fontSize:14,fontWeight:700,color:INK,marginBottom:4}}>Today's Nail Art</p>
           <p style={{fontSize:12,fontWeight:300,color:MID,lineHeight:1.6}}>4709 W Parker Rd #420<br/>Plano, TX 75093</p>
