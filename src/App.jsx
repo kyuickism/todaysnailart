@@ -25,9 +25,9 @@ const PHOTOS = [
   "https://images.unsplash.com/photo-1583241800698-e8ab01830e36?auto=format&fit=crop&w=600&q=85",
   "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=85&crop=bottom",
 ];
-const HERO_IMG = "https://images.unsplash.com/photo-1604655856234-5e7c94c1c7dc?auto=format&fit=crop&w=900&q=90";
-const SVC_IMG  = "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=90";
-const BAND_IMG = "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1600&q=80";
+const HERO_IMG = "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=900&q=90";
+const SVC_IMG  = "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=90";
+const BAND_IMG = "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1600&q=80";
 
 const W="#FFFFFF",OFF="#FAF8F5",WARM="#F3EDE5",BDR="#E5DDD5",INK="#1A1714",MID="#6A5E54",LITE="#A09080",ROSE="#C4857A",ROSE2="#E8B4AB",DARK="#1C1814";
 
@@ -492,8 +492,38 @@ function Hero({t,scrollTo}){
           </div>
         </div>
         <div className="rise" style={{position:"relative",animationDelay:"0.28s",opacity:0}}>
-          <div style={{borderRadius:20,overflow:"hidden",aspectRatio:"4/5",boxShadow:"0 32px 80px rgba(28,24,20,0.15)",background:`linear-gradient(160deg,${WARM},${OFF})`}}>
-            <img src={HERO_IMG} alt="Nail art" onError={e=>e.target.style.opacity="0"} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center top"}}/>
+          <div style={{borderRadius:20,overflow:"hidden",aspectRatio:"4/5",
+              boxShadow:"0 32px 80px rgba(28,24,20,0.15)",
+              position:"relative",background:`linear-gradient(160deg,${WARM},${OFF})`}}>
+            {/* Blurred happy lifestyle background */}
+            <img src={HERO_IMG} alt="lifestyle" 
+              onError={e=>e.target.style.opacity="0"}
+              style={{width:"100%",height:"100%",objectFit:"cover",
+                objectPosition:"center top",filter:"blur(3px) brightness(0.85)",
+                transform:"scale(1.05)"}}/>
+            {/* Warm overlay */}
+            <div style={{position:"absolute",inset:0,
+              background:"linear-gradient(160deg,rgba(243,237,229,0.25),rgba(196,133,122,0.15))"}}/>
+            {/* Logo centered */}
+            <div style={{position:"absolute",inset:0,
+              display:"flex",alignItems:"center",justifyContent:"center"}}>
+              <div style={{background:"rgba(255,255,255,0.92)",
+                borderRadius:20,padding:"28px 32px",
+                boxShadow:"0 20px 60px rgba(28,24,20,0.2)",
+                display:"flex",flexDirection:"column",
+                alignItems:"center",gap:12,
+                backdropFilter:"blur(8px)"}}>
+                <img src={LOGO_URL} alt="Today's Nail Art"
+                  style={{height:110,width:"auto",objectFit:"contain"}}
+                  onError={e=>e.target.style.display="none"}/>
+                <div style={{width:32,height:1,background:"#C4857A"}}/>
+                <p style={{fontFamily:"'Inter',sans-serif",fontSize:9,
+                  letterSpacing:4,textTransform:"uppercase",
+                  color:"#A09080",textAlign:"center"}}>
+                  Plano, Texas
+                </p>
+              </div>
+            </div>
           </div>
           <div className="bob" style={{position:"absolute",bottom:-16,left:-24,background:W,borderRadius:12,padding:"14px 18px",boxShadow:"0 12px 40px rgba(28,24,20,0.14)",border:`1px solid ${BDR}`,display:"flex",alignItems:"center",gap:12}}>
             <img src={LOGO_URL} alt="logo" style={{height:36,width:"auto",objectFit:"contain"}} onError={e=>e.target.style.display="none"}/>
